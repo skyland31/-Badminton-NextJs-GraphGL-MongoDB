@@ -1,0 +1,4 @@
+npx create-next-app next-apollo 
+//สร้าง โปรเจค Next.js
+npm run dev 
+//รัน โปรเจคขึ้นมา

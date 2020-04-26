@@ -1,0 +1,25 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r esm src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.9.13",
+    "bcryptjs": "^2.4.3",
+    "datejs": "^1.0.0-rc3",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "graphql": "^14.6.0",
+    "graphql-iso-date": "^3.6.1",
+    "mongoose": "^5.9.9",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {},
+  "description": ""
+}

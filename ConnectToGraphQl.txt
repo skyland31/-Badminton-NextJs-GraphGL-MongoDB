@@ -1,0 +1,5 @@
+start graph server and cloud alas sever mongo ของส่วน back-end
+
+ref. : https://www.youtube.com/watch?v=_t2sR1fMwB8&list=PLCT_w0Fqe_z7JbLEBkco62V1Q1ZkSQ-7V&index=4
+
+npm i graphql graphql-tag apollo-client @apollo/react-hooks apollo-link-http apoll-link-context apollo-cache-inmemory isomorphic-unfetch next-with-apollo

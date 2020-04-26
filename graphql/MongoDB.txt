@@ -1,0 +1,11 @@
+npm i mongoose ติดตั้ง mongoose
+เข้าเว็บ MongoDB เลือก Cloud -> Atlas แล้ว Login
+คลิกที่ build a cluster
+เลือก Start a free 
+เลือก AWS Singapore แล้วตั้งชื่อ cluster แล้วกดสร้าง
+สร้างสามารถกด connect แล้วทำตามขั้นตอน 1
+ขั้นตอนที่ 2 ให้สร้าง username แล้ว auto password ไว้สำหรับเข้า MongoDB
+หลังจากเสร็จกดไปขั้นตอนต่อไป เลือก Connect your application
+************************** หากเกิด Error **************************
+MongooseError [MongooseServerSelectionError]: connection <monitor> to 18.139.167.78:27017 closed
+ให้ไปที่ เว็บMongoDB เลือกเมนูด้านซ้าย Network Access แล้วทำการลบ IP แล้วแอด IP เข้าไปใหม่
