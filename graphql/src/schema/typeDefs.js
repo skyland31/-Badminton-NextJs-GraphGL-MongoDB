@@ -30,6 +30,7 @@ const typeDefs = gql`
   type Mutation {
     createCompetition(name: String!, detail: String!, place: String!,price: String!,compet_start: String!,compet_end: String!,start: String!,end: String!,pay_end: String!): Competition
     createCompetition_gen(id: ID!,type:String!,gen:String):Competition_Gen!
+    
   }
 `;
 export default typeDefs;

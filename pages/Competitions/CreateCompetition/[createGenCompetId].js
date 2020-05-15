@@ -4,6 +4,8 @@ import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import apolloClient from '../../../apollo/apolloClient'
 import Link from 'next/link'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 const CREATE_GEN = gql`
 mutation CREATE_GEN($id: ID!,$type:String!,$gen:String){
@@ -43,7 +45,18 @@ const CreateGens = () => {
         onCompleted: data => {
             if (data) {
                 setSuccess(true)
-
+                setGen({
+                    ...genInfo,
+                    gen: ""
+                })
+                if (genInfo.type === 'ประชาชน') {
+                    setDisableGenY(true)
+                    setDisableGenP(false)
+                }
+                else {
+                    setDisableGenY(false)
+                    setDisableGenP(true)
+                }
             }
         }
     })
@@ -51,7 +64,7 @@ const CreateGens = () => {
     const handleSave = async e => {
         try {
             setGen({
-                ...genInfo,
+                ...genInfo, id: route.query.createGenCompetId,
                 [e.target.name]: e.target.value
             })
             if (success == true) {
@@ -66,12 +79,10 @@ const CreateGens = () => {
     }
 
     const handleChange = e => {
-
         setGen({
-            ...genInfo,
+            ...genInfo, id: route.query.createGenCompetId,
             [e.target.name]: e.target.value
         })
-        console.log(genInfo);
     }
 
     const handleType = e => {
@@ -88,7 +99,7 @@ const CreateGens = () => {
             setDisableGenY(true)
         }
         setGen({
-            ...genInfo,
+            ...genInfo, id: route.query.createGenCompetId,
             [e.target.name]: e.target.value
         })
         //console.log(genInfo);
@@ -101,38 +112,43 @@ const CreateGens = () => {
         }
         else if (disableGenP == false && disableGenY == true) {
             return (
-                <select name="gen" onChange={handleChange}>
-                    <option disabled={disableGenY} value={null}>เลือกรุ่น</option>
+                <Form.Control as="select" name="gen" onChange={handleChange}>
+                    <option value={null}>เลือกรุ่น</option>
                     {genP.map(prod => (
                         <option disabled={disableGenP} value={prod}>{prod}</option>
                     ))}
-                </select>
+                </Form.Control>
             )
         }
         else {
             return (
-                <select name="gen" defaultValue="เลือกรุ่น" onChange={handleChange}>
-                    <option disabled={disableGenY} value={null}>เลือกรุ่น</option>
+                <Form.Control as="select" name="gen" onChange={handleChange}>
+                    <option value={null}>เลือกรุ่น</option>
                     {genY.map(prod => (
                         <option disabled={disableGenY} value={prod}>{prod}</option>
                     ))}
-                </select>
+                </Form.Control>
             )
         }
     }
-
+    console.log(genInfo);
     return (
         <div style={{ margin: 80 }}>
-            <form onSubmit={handleSave}>
-                <input type="text" name="id" value={route.query.createGenCompetId} hidden={true} />
-                <select name="type" onChange={handleType}>
-                    <option value={null}>กรุณาเลือก</option>
-                    <option value="ประชาชน">ประชาชน</option>
-                    <option value="เยาวชน">เยาวชน</option>
-                </select>
+            <Form onSubmit={handleSave}>
+                {/* <input type="text" name="id" value={route.query.createGenCompetId} hidden={true} /> */}
+                <Form.Group controlId="type">
+                    <Form.Label>Custom select</Form.Label>
+                    <Form.Control as="select" name="type" onChange={handleType}>
+                        <option value={null}>กรุณาเลือก</option>
+                        <option value="ประชาชน">ประชาชน</option>
+                        <option value="เยาวชน">เยาวชน</option>
+                    </Form.Control>
+                </Form.Group>
                 {selectGen()}
-                <button type="submit" style={{ margin: '5px', padding: '18px' }}>บันทึก</button>
-            </form>
+                <Button variant="primary" type="submit" onChange={handleChange} disabled={loading}>
+                    Submit
+                </Button>
+            </Form>
             <div>
                 {success && <p>Success for Create Gen {data.createCompetition_gen.gen}. You Can Create Gen again or <Link href="../../Competitions">Come back Home</Link></p>}
             </div>

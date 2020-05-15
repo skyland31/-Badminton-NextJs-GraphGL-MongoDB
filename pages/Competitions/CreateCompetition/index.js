@@ -3,6 +3,11 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import apolloClient from '../../../apollo/apolloClient'
 import Link from 'next/link'
+import Alert from 'react-bootstrap/Alert'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 const CREATE_COMPETITION = gql`
 mutation CREATE_COMPETITION($name: String!, $detail: String!, $place: String!,$price: String!,$compet_start: String!,$compet_end: String!,$start: String!,$end: String!,$pay_end: String!) {
   createCompetition(
@@ -86,28 +91,100 @@ const Create = () => {
             [e.target.name]: e.target.value
         })
     }
-    console.log(data);
+    console.log(competitionInfo);
 
     return (
         <div style={{ margin: 80 }}>
-            <form action="../CreateGenCompetition" onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder='Title Competition' onChange={handleChange} /><br /><br />
-                <textarea type="input" name="detail" placeholder='รายละเอียด' onChange={handleChange} /><br /><br />
-                <input type="text" name="start" placeholder='วันเปิดรับสมัคร' onChange={handleChange} /><br /><br />
-                <input type="text" name="end" placeholder='วันสิ้นสุดรับสมัคร ' onChange={handleChange} /><br /><br />
-                <input type="text" name="compet_start" placeholder='วันเริ่มการแข่งขัน' onChange={handleChange} /><br /><br />
-                <input type="text" name="compet_end" placeholder='วันสิ้นสุดการแข่งขัน' onChange={handleChange} /><br /><br />
-                <input type="number" name="price" placeholder='ค่าสมัคร' onChange={handleChange} /><br /><br />
-                <input type="text" name="pay_end" placeholder='วันสุดท้ายการจ่ายเงิน' onChange={handleChange} /><br /><br />
-                <input type="text" name="place" placeholder='สถานที่' onChange={handleChange} /><br /><br />
-                <button type="submit" style={{ margin: '5px', padding: '18px' }} onChange={handleChange} disabled={loading}>สร้างการแข่งขัน Badminton</button>
-            </form>
-            <div>
-                {success && <p>You successfully Create Competitions,please create Gens <Link href="../Competitions/CreateCompetition/[createGenCompettionId]" key={data.createCompetition.id} as={`../Competitions/CreateCompetition/${data.createCompetition.id}`}><a >Competitions.</a></Link></p>}
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="name">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="text" name="name" placeholder="กรุณากรอกชื่อการแข่งขันแบดมินตัน" onChange={handleChange} />
+                    <Form.Text className="text-muted">
+                        Your must set title competition badminton.
+                    </Form.Text>
+                </Form.Group>
 
-                {error && <p style={{ color: 'red' }}>{error.graphQLErrors[0].message}</p>}
-            </div>
-        </div >
+                <Form.Group controlId="detail">
+                    <Form.Label>รายละเอียดการแข่งขัน</Form.Label>
+                    <Form.Control as="textarea" name="detail" placeholder="กรอกรายละเอียดการแข่งขัน" rows="5" onChange={handleChange} />
+                </Form.Group>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="start">
+                            <Form.Label>วันเปิดรับสมัคร</Form.Label>
+                            <Form.Control type="text" name="start" placeholder="2020-01-15" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="end">
+                            <Form.Label>วันสิ้นสุดรับสมัคร</Form.Label>
+                            <Form.Control type="text" name="end" placeholder="2020-01-15" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="compet_start">
+                            <Form.Label>วันเริ่มการแข่งขัน</Form.Label>
+                            <Form.Control type="text" name="compet_start" placeholder="2020-01-15" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="compet_end">
+                            <Form.Label>วันวันสิ้นสุดการแข่งขัน</Form.Label>
+                            <Form.Control type="text" name="compet_end" placeholder="2020-01-15" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="price">
+                            <Form.Label>ค่าสมัคร</Form.Label>
+                            <Form.Control type="text" name="price" placeholder="จำนวนเงิน" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                                บาท
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="pay_end">
+                            <Form.Label>วันสุดท้ายการจ่ายเงิน</Form.Label>
+                            <Form.Control type="text" name="pay_end" placeholder="2020-01-15" onChange={handleChange} />
+                            <Form.Text className="text-muted">
+                            </Form.Text>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Form.Group controlId="place">
+                    <Form.Label>สถานที่</Form.Label>
+                    <Form.Control type="text" name="place" placeholder="กรุณากรอกชื่อการแข่งขันแบดมินตัน" onChange={handleChange} />
+                </Form.Group>
+                <Button variant="primary" type="submit" onChange={handleChange} disabled={loading}>
+                    Submit
+                </Button>
+                <br />
+                {success &&
+                    <Alert variant="success">
+                        This is a success alert with Success.......
+                        <Link href="../Competitions/CreateCompetition/[createGenCompettionId]" key={data.createCompetition.id} as={`../Competitions/CreateCompetition/${data.createCompetition.id}`}><a >Next Step-></a></Link>
+                    </Alert>
+                }
+
+                {error &&
+                    <Alert variant="danger">{error.graphQLErrors[0].message}
+                        <Link href="../Competitions"><a >Come Back Home Page.</a></Link>
+                    </Alert>
+                }
+            </Form>
+        </div>
     )
 }
 

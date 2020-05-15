@@ -9,7 +9,7 @@ import Link from 'next/link'
 import gql from 'graphql-tag'
 import apolloClient from '../../apollo/apolloClient'
 import { useQuery } from '@apollo/react-hooks'
-
+import Button from 'react-bootstrap/Button'
 const QUERY_COMPETITION = gql`
     query QUERY_COMPETITION($id: ID!){
         competition(id: $id){
@@ -100,10 +100,20 @@ const Competition = () => {
 
                             </Container>
                         </Card.Text>
-
-                        <Link href='/Competitions'>
-                            <a style={Detail}>กลับ</a>
-                        </Link>
+                        <Row>
+                            <Col>
+                                <Link href='/Competitions'>
+                                    <a style={Detail}>กลับ</a>
+                                </Link>
+                            </Col>
+                            <Col className="text-left">
+                                <Link href="/Competitions/CreateCompetition/[createGenCompettionId]" key={data.competition.id} as={`../Competitions/CreateCompetition/${data.competition.id}`}>
+                                    <Button variant="warning" >
+                                        เพิ่มประเภทและรุ่นที่เปิดรับสมัคร
+                                    </Button>
+                                </Link>
+                            </Col>
+                        </Row>
                     </Card.Body>
                     <Card.Footer className="text-muted">จ่ายค่าสมัครได้ถึง {date.toISOString(data.competition.pay_end).split("T")[0]}</Card.Footer>
                 </Card>

@@ -17,17 +17,15 @@ const Mutation = {
             throw new Error("You must provide data type and gen.")
         }
         const gen = await competitionGen.create({ ...args, compet_id: competitionId })
-        const com = await Competition.findById(competitionId);
-
+        const com = await Competition.findById(competitionId).populate({ path: 'gens', populate: { path: 'compet_id' } })
         if (!com.gens) {
             com.gens = [gen]
         } else {
             com.gens.push(gen)
         }
         await com.save()
-
         return competitionGen.findById(gen.id).populate({ path: 'compet_id', populate: { path: 'gens' } })
-    }
+    },
 }
 
 // const update {
